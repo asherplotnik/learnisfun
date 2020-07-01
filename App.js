@@ -1,21 +1,42 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { AppLoading } from "expo";
+import * as Font from "expo-font";
+import RootNavigator from "./navigation/RootNavigator";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import ReduxThunk from "redux-thunk";
+import usersReducer from "./store/reducers/usersReducer";
+import authReducer from "./store/reducers/authReducer";
+
+const rootReducer = combineReducers({
+  users: usersReducer,
+  auth: authReducer,
+});
+
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
+
+const fetchFonts = async () => {
+  return await Font.loadAsync({
+    "joti-one": require("./assets/fonts/JotiOne-Regular.ttf"),
+  });
+};
 
 export default function App() {
+  const [dataLoaded, setDataLoaded] = useState(false);
+  if (!dataLoaded) {
+    console.log("loading fonts...");
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setDataLoaded(true)}
+        onError={(err) => console.log(err)}
+      />
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <RootNavigator />
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
