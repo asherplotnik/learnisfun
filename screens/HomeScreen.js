@@ -23,7 +23,7 @@ const HomeScreen = (props) => {
       <View style={styles.login}>
         <Text style={styles.loginText}>Login</Text>
         <View style={styles.inputContainer}>
-          <Text style={styles.text}> Username:</Text>
+          <Text style={styles.text}> Username</Text>
           <TextInput
             style={styles.textInput}
             value={usernameInput}
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   text: {
+    fontSize: 20,
     marginTop: 5,
     color: "white",
   },
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   loginText: {
-    fontSize: 30,
+    fontSize: 35,
     fontFamily: "joti-one",
     color: Colors.titleYellow,
     textShadowColor: "rgba(0, 0, 0, 0.75)",
@@ -80,9 +81,6 @@ const styles = StyleSheet.create({
   },
 
   inputContainer: {
-    borderColor: "white",
-    borderWidth: 1,
-    borderRadius: 10,
     padding: 10,
     width: Dimensions.get("window").width / 2,
     alignItems: "center",
@@ -95,7 +93,7 @@ const styles = StyleSheet.create({
 });
 
 export const homeScreenOptions = {
-  headerTitle: "Welcome",
+  headerTitle: "School name",
 };
 
 export default HomeScreen;

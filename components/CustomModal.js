@@ -1,20 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, StyleSheet, Modal, Text, Button } from "react-native";
-import Colors from "../constants/Colors";
 const CustomModal = (props) => {
-  const [modalVisible, setModalVisible] = useState(true);
-
   return (
     <Modal
       transparent
+      style={{ backgroundColor: "red" }}
       animationType="fade"
-      visible={modalVisible}
-      onRequestClose={() => setModalVisible(false)}
+      visible={props.show}
+      onRequestClose={props.close}
     >
       <View style={styles.modalWrapper}>
         <View style={styles.modalView}>
           <Text style={styles.textMessage}>{props.children}</Text>
-          <Button title="OK" onPress={() => setModalVisible(false)} />
+          <Button title="OK" onPress={props.close} />
         </View>
       </View>
     </Modal>
@@ -26,6 +24,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,0.6)",
   },
   modalView: {
     width: "70%",
@@ -38,8 +37,9 @@ const styles = StyleSheet.create({
   textMessage: {
     fontSize: 20,
     fontWeight: "bold",
-    color: Colors.modalText,
+    color: "black",
     padding: 10,
+    textAlign: "center",
   },
 });
 
