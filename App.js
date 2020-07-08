@@ -7,10 +7,12 @@ import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import usersReducer from "./store/reducers/usersReducer";
 import authReducer from "./store/reducers/authReducer";
+import activeLessonReducer from "./store/reducers/activeLessonReducer";
 
 const rootReducer = combineReducers({
   users: usersReducer,
   auth: authReducer,
+  activeLesson: activeLessonReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
@@ -18,6 +20,7 @@ const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 const fetchFonts = async () => {
   return await Font.loadAsync({
     "joti-one": require("./assets/fonts/JotiOne-Regular.ttf"),
+    "kurri-island": require("./assets/fonts/KurriIslandPERSONAL-Bold.ttf"),
   });
 };
 

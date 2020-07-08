@@ -6,9 +6,9 @@ import Colors from "../constants/Colors";
 
 const defaultNavigationOptions = {
   headerStyle: {
-    backgroundColor: Platform.OS === "android" ? Colors.background : "",
+    backgroundColor: Platform.OS === "android" ? Colors.buttonColor : "",
   },
-  headerTintColor: Platform.OS === "android" ? "white" : Colors.green,
+  headerTintColor: Platform.OS === "android" ? "white" : Colors.buttonColor,
 };
 
 const authStackNavigator = createStackNavigator();

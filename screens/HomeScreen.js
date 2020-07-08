@@ -48,7 +48,7 @@ const HomeScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.buttonColor,
     alignContent: "center",
   },
   text: {
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   login: {
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.buttonColor,
     flex: 1.2,
     alignItems: "center",
     justifyContent: "center",
