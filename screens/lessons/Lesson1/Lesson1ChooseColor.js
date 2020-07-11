@@ -36,7 +36,7 @@ const Lesson1ChooseColor = (props) => {
   const colorTouched = useRef(null);
   const [svgElementArray, setSvgElementArray] = useState([]);
   const [colorAnim, setColorAnim] = useState(false);
-  const [showMessage, setShowMessage] = useState(true);
+  const [showMessage, setShowMessage] = useState(false);
   const [toggleNextScreen, setToggleNextScreen] = useState(false);
   let isWrong = useRef(false);
   const countGridBlock = useRef(0);
@@ -68,7 +68,7 @@ const Lesson1ChooseColor = (props) => {
     isWrong.current = false;
     setSvgElementArray([]);
     countGridBlock.current = 0;
-    setShowMessage(true);
+    setShowMessage(false);
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
         imageGrid.current[i][j].u = 0;

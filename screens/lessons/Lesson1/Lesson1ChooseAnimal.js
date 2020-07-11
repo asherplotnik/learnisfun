@@ -76,7 +76,7 @@ const Lesson1ChooseAnimal = (props) => {
     dispatch(activeLessonActions.setActiveLesson(1, 100));
   }, [activeLessonActions]);
 
-  if (nextAnimal === 1) {
+  if (nextAnimal === 8) {
     pageView = (
       <View style={styles.finishScreen}>
         <Text style={styles.finishText}>Yeah... you made it.</Text>
