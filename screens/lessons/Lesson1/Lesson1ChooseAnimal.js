@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import * as activeLessonActions from "../../../store/actions/activeLessonActions";
 import React, { useState, useRef, useEffect } from "react";
+import FinishScreen from "../../../components/FinishScreen";
 import {
   ScrollView,
   View,
@@ -50,7 +51,6 @@ const Lesson1ChooseAnimal = (props) => {
   };
 
   const dispatch = useDispatch();
-  const reduxScore = useSelector((state) => state.activeLesson.score);
   const soundObject = new Audio.Sound();
   let [showModal, setShowModal] = useState(true);
   let [selctedAnimal, setSelectedAnimal] = useState(null);
@@ -77,37 +77,7 @@ const Lesson1ChooseAnimal = (props) => {
   }, [activeLessonActions]);
 
   if (nextAnimal === 8) {
-    pageView = (
-      <View style={styles.finishScreen}>
-        <Text style={styles.finishText}>Yeah... you made it.</Text>
-        <Text style={styles.finishText}>Your score is {reduxScore}</Text>
-        <View style={{ alignItems: "center" }}>
-          {reduxScore === 100 ? (
-            <View>
-              <Text style={styles.finishText}>
-                AMAZING! No mistakes at all.
-              </Text>
-              <Text style={styles.finishText}>PERFECT!!!</Text>
-            </View>
-          ) : reduxScore >= 90 ? (
-            <Text style={styles.finishText}>VERY GOOD - GOOD JOB</Text>
-          ) : reduxScore >= 75 ? (
-            <Text style={styles.finishText}>NOT BAD - TRY AGAIN</Text>
-          ) : reduxScore >= 55 ? (
-            <Text style={styles.finishText}>NOT BAD</Text>
-          ) : (
-            <Text style={styles.finishText}>
-              NEED IMPROVMENT - BETTER LUCK NEXT TIME...
-            </Text>
-          )}
-          <View style={styles.buttonView}>
-            <TouchableOpacity onPress={backToLessons}>
-              <Text style={styles.buttonText}>Back</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    );
+    pageView = <FinishScreen backToLessons={backToLessons} />;
   } else {
     pageView = (
       <ScrollView>

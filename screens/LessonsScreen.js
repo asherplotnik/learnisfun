@@ -9,7 +9,7 @@ import {
 import Colors from "../constants/Colors";
 const lessons = [
   { id: 1, name: "lesson1", description: "Color the Animals" },
-  { id: 2, name: "lesson2", description: "Match moods" },
+  { id: 2, name: "lesson2", description: "Match faces to feelings" },
   { id: 3, name: "lesson3", description: "Lesson 3" },
   { id: 4, name: "lesson4", description: "Lesson 4" },
 ];
