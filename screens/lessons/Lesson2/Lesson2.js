@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import CustomModal from "../../../components/CustomModal";
 import Colors from "../../../constants/Colors";
 import * as activeLessonActions from "../../../store/actions/activeLessonActions";
@@ -158,12 +158,11 @@ const Lesson2 = (props) => {
           return;
         }
         if (
-          pan.x._value >= +imageWidth * 2.1 &&
-          pan.x._value <= +imageWidth * 2.3 &&
+          pan.x._value >= +imageWidth * 2.0 &&
+          pan.x._value <= +imageWidth * 2.4 &&
           pan.y._value + initialPosition.y >=
-            screenHeight / 3 - verticalAjuster &&
-          pan.y._value + initialPosition.y <=
-            screenHeight / 2.85 - verticalAjuster
+            screenHeight / 3.1 - verticalAjuster &&
+          pan.y._value + initialPosition.y <= screenHeight / 3 - verticalAjuster
         ) {
           pan.flattenOffset();
           nextFace();
@@ -309,6 +308,7 @@ const Lesson2 = (props) => {
           ...styles.showVView,
           opacity: showVAnim,
           display: showV ? "flex" : "none",
+          zIndex: animFinished ? 50 : 200,
         }}
       >
         <Image style={styles.vImage} source={require("./v.png")} />
@@ -347,7 +347,7 @@ const Lesson2 = (props) => {
           opacity: showRemove,
           display: animFinished ? "none" : "flex",
         }}
-        source={require("./hand.png")}
+        source={require("../../../assets/hand.png")}
       />
       <View style={styles.rowImage} {...panResponder.panHandlers}>
         <Animated.Image
@@ -484,7 +484,6 @@ const styles = StyleSheet.create({
   },
   showVView: {
     flex: 1,
-    zIndex: 50,
     position: "absolute",
     marginTop: 50,
   },
