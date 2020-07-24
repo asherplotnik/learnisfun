@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import CustomModal from "../../../components/CustomModal";
 import Colors from "../../../constants/Colors";
 import * as activeLessonActions from "../../../store/actions/activeLessonActions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import FinishScreen from "../../../components/FinishScreen";
 import { Audio } from "expo-av";
 import audioMessages from "./constants";
@@ -237,7 +237,7 @@ const Lesson2 = (props) => {
   };
 
   useEffect(() => {
-    dispatch(activeLessonActions.setActiveLesson(1, 100));
+    dispatch(activeLessonActions.setActiveLesson(2, 100));
   }, []);
 
   useEffect(() => {
@@ -311,7 +311,10 @@ const Lesson2 = (props) => {
           zIndex: animFinished ? 50 : 200,
         }}
       >
-        <Image style={styles.vImage} source={require("./v.png")} />
+        <Image
+          style={styles.vImage}
+          source={require("../../../assets/v.png")}
+        />
       </Animated.View>
       <Animated.View
         style={{
@@ -405,7 +408,7 @@ const Lesson2 = (props) => {
     </View>
   );
   if (outsideMood === "done") {
-    pageView = pageView = <FinishScreen backToLessons={backToLessons} />;
+    pageView = <FinishScreen backToLessons={backToLessons} />;
   }
   if (playMessage !== null && animFinished) {
     playAudio(playMessage);

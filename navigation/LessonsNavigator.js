@@ -8,8 +8,8 @@ import Lesson1ChooseColor from "../screens/lessons/Lesson1/Lesson1ChooseColor";
 import Lesson1ChooseAnimal from "../screens/lessons/Lesson1/Lesson1ChooseAnimal";
 import Lesson1 from "../screens/lessons/Lesson1/Lesson1Navigator";
 import Lesson2 from "../screens/lessons/Lesson2/Lesson2";
-import Lesson3 from "../screens/lessons/Lesson3";
-import Lesson4 from "../screens/lessons/Lesson4";
+import Lesson3 from "../screens/lessons/Lesson3/Lesson3";
+import Lesson4 from "../screens/lessons/Lesson4/Lesson4";
 const defaultNavigationOptions = {
   headerStyle: {
     backgroundColor: Platform.OS === "android" ? Colors.buttonColor : "",

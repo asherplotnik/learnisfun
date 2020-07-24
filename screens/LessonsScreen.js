@@ -10,8 +10,8 @@ import Colors from "../constants/Colors";
 const lessons = [
   { id: 1, name: "lesson1", description: "Color the Animals" },
   { id: 2, name: "lesson2", description: "Match faces to feelings" },
-  { id: 3, name: "lesson3", description: "Lesson 3" },
-  { id: 4, name: "lesson4", description: "Lesson 4" },
+  { id: 3, name: "lesson3", description: "Match letters" },
+  { id: 4, name: "lesson4", description: "Find the vegetables" },
 ];
 const LessonsScreen = (props) => {
   return (
