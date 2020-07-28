@@ -10,6 +10,8 @@ import Lesson1 from "../screens/lessons/Lesson1/Lesson1Navigator";
 import Lesson2 from "../screens/lessons/Lesson2/Lesson2";
 import Lesson3 from "../screens/lessons/Lesson3/Lesson3";
 import Lesson4 from "../screens/lessons/Lesson4/Lesson4";
+import Lesson5 from "../screens/lessons/Lesson5/Lesson5";
+import Lesson6 from "../screens/lessons/Lesson6/Lesson6";
 const defaultNavigationOptions = {
   headerStyle: {
     backgroundColor: Platform.OS === "android" ? Colors.buttonColor : "",
@@ -30,19 +32,12 @@ export const LessonsNavigator = () => {
         component={LessonsScreen}
         options={lessonsScreenOptions}
       />
-      {/* <LessonsStackNavigator.Screen
-        name="Lesson1ChooseColor"
-        component={Lesson1ChooseColor}
-      />
-      <LessonsStackNavigator.Screen
-        name="Lesson1ChooseAnimal"
-        component={Lesson1ChooseAnimal}
-      /> */}
-
       <LessonsStackNavigator.Screen name="lesson1" component={Lesson1} />
       <LessonsStackNavigator.Screen name="lesson2" component={Lesson2} />
       <LessonsStackNavigator.Screen name="lesson3" component={Lesson3} />
       <LessonsStackNavigator.Screen name="lesson4" component={Lesson4} />
+      <LessonsStackNavigator.Screen name="lesson5" component={Lesson5} />
+      <LessonsStackNavigator.Screen name="lesson6" component={Lesson6} />
     </LessonsStackNavigator.Navigator>
   );
 };

@@ -12,6 +12,8 @@ const lessons = [
   { id: 2, name: "lesson2", description: "Match faces to feelings" },
   { id: 3, name: "lesson3", description: "Match letters" },
   { id: 4, name: "lesson4", description: "Find the vegetables" },
+  { id: 5, name: "lesson5", description: "Spot the differences" },
+  { id: 6, name: "lesson6", description: "Color the clothes" },
 ];
 const LessonsScreen = (props) => {
   return (
