@@ -22,10 +22,10 @@ import CustomModal from "../../../components/CustomModal";
 import { Audio } from "expo-av";
 import Colors from "../../../constants/Colors";
 import { colors, grid, audioMessages } from "./constants";
-import V from "../../../components/V";
-import X from "../../../components/X";
+import FinishScreen from "../../../components/FinishScreen";
 const Lesson6 = (props) => {
   let currentInside = useRef(0);
+
   const otherDispatch = useDispatch();
   let soundObject = new Audio.Sound();
   let imageGrid = useRef(grid);
@@ -34,38 +34,25 @@ const Lesson6 = (props) => {
     Dimensions.get("window").height - 80
   }`;
   const colorTouched = useRef(null);
+  const [finish, setFinish] = useState(false);
   const [svgElementArray, setSvgElementArray] = useState([]);
   const [colorAnim, setColorAnim] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [toggleNextScreen, setToggleNextScreen] = useState(false);
   let isWrong = useRef(false);
   const countGridBlock = useRef(0);
-  const buttonAnim = useRef(new Animated.Value(0)).current;
   const finishScreenHandler = () => {
     console.log("DONE");
+    setFinish(true);
   };
-  const [showV, setShowV] = useState(false);
-  const [showX, setShowX] = useState(false);
   const updateShowMessage = (bool) => {
     setShowMessage(bool);
   };
-  const updateShowV = () => {
-    setShowV((prevState) => !prevState);
-  };
-  const updateShowX = () => {
-    setShowX((prevState) => !prevState);
-  };
-  const toggleButtonOpacity = () => {
-    setToggleNextScreen(true);
-    Animated.timing(buttonAnim, {
-      toValue: 1,
-      duration: 600,
-      useNativeDriver: false,
-    }).start();
+  const backToLessons = () => {
+    props.navigation.navigate("lessons");
   };
 
   const playAudio = async (link) => {
-    console.log("LINK", link);
     try {
       await soundObject.loadAsync(link);
       await soundObject.playAsync();
@@ -79,7 +66,7 @@ const Lesson6 = (props) => {
     isWrong.current = false;
     setSvgElementArray([]);
     countGridBlock.current = 0;
-    setShowMessage(false);
+    updateShowMessage(true);
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 24; j++) {
         imageGrid.current[i][j].u = 0;
@@ -147,7 +134,7 @@ const Lesson6 = (props) => {
 
   const updateGrid = (x, y) => {
     if (colorTouched.current === null) {
-      //setShowMessage(true);
+      setShowMessage(true);
       setColorAnim(true);
       return;
     }
@@ -261,11 +248,15 @@ const Lesson6 = (props) => {
       colors[currentInside.current].grid.length - countGridBlock.current <=
       3
     ) {
-      //updateShowV();
-      currentInside.current = currentInside.current + 1;
-      console.log("current inside:", currentInside.current);
-      updateShowMessage(true);
-      nextItem(currentInside.current);
+      if (currentInside.current < 3) {
+        currentInside.current = currentInside.current + 1;
+        updateShowMessage(true);
+        nextItem(currentInside.current);
+      } else {
+        setTimeout(() => {
+          finishScreenHandler();
+        }, 1000);
+      }
     }
   };
 
@@ -317,16 +308,14 @@ const Lesson6 = (props) => {
   };
 
   useEffect(() => {
+    otherDispatch(activeLessonActions.setActiveLesson(6, 100));
     initialize();
   }, []);
   props.navigation.setOptions({
     headerTitle: "Color the clothes",
   });
-  console.log("current:", currentInside.current);
-  return (
+  let pageView = (
     <View style={styles.wrapper}>
-      {/* <V show={showV} setShow={updateShowV} />
-      <X show={showX} setShow={updateShowX} /> */}
       <CustomModal
         close={() => setShowMessage(false)}
         show={showMessage}
@@ -353,6 +342,52 @@ const Lesson6 = (props) => {
       >
         <Svg height="100%" width="100%" viewBox={svgViewBox}>
           {svgElementArray}
+          <Rect
+            x={(colorViewWidth * 5 - styles.image.width) / 2}
+            y="0"
+            width={styles.image.width}
+            height={styles.image.height / 5}
+            fill={currentInside.current === 0 ? "transparent" : "red"}
+          />
+          <Rect
+            x={(colorViewWidth * 5 - styles.image.width) / 2}
+            y={styles.image.height / 2.8}
+            width={styles.image.width}
+            height={styles.image.height / 3.75}
+            fill={
+              currentInside.current < 1
+                ? "rgb(240,240,240)"
+                : currentInside.current === 1
+                ? "transparent"
+                : "white"
+            }
+          />
+          <Rect
+            x={(colorViewWidth * 5 - styles.image.width) / 2}
+            y={styles.image.height / 1.6}
+            width={styles.image.width}
+            height={styles.image.height / 5}
+            fill={
+              currentInside.current < 2
+                ? "rgb(240,240,240)"
+                : currentInside.current === 2
+                ? "transparent"
+                : "brown"
+            }
+          />
+          <Rect
+            x={(colorViewWidth * 5 - styles.image.width) / 2}
+            y={styles.image.height / 1.2}
+            width={styles.image.width}
+            height={styles.image.height / 7}
+            fill={
+              currentInside.current < 3
+                ? "rgb(240,240,240)"
+                : currentInside.current === 3
+                ? "transparent"
+                : "black"
+            }
+          />
           <Image
             x={(colorViewWidth * 5 - styles.image.width) / 2}
             y="0"
@@ -378,38 +413,34 @@ const Lesson6 = (props) => {
             height={styles.image.height}
             fill="rgb(240,240,240)"
           />
+
           {/* <BuildGridHelper /> */}
         </Svg>
-        <TouchableOpacity
-          onPress={toggleNextScreen ? finishScreenHandler : null}
-        >
-          <Animated.View
-            style={{
-              ...styles.buttonView,
-              opacity: buttonAnim,
-              zIndex: toggleNextScreen === false ? 90 : 150,
-            }}
-          >
-            <View style={styles.button}>
-              <Text style={styles.buttonText}>NEXT</Text>
-            </View>
-          </Animated.View>
-        </TouchableOpacity>
       </View>
     </View>
   );
+  if (finish) {
+    pageView = <FinishScreen backToLessons={backToLessons} />;
+  }
+  return pageView;
 };
 
 const colorWidth = Dimensions.get("window").width / 8;
 const colorHeight = Dimensions.get("window").height / 14;
 
 const styles = StyleSheet.create({
+  touch: {
+    position: "absolute",
+    top: Dimensions.get("window").height / 1.5,
+    left: 50,
+  },
   buttonText: {
     color: "white",
     fontSize: 20,
     fontFamily: "kurri-island",
   },
   buttonView: {
+    flexDirection: "row",
     width: "100%",
     height: colorWidth,
     justifyContent: "center",

@@ -12,6 +12,7 @@ import Lesson3 from "../screens/lessons/Lesson3/Lesson3";
 import Lesson4 from "../screens/lessons/Lesson4/Lesson4";
 import Lesson5 from "../screens/lessons/Lesson5/Lesson5";
 import Lesson6 from "../screens/lessons/Lesson6/Lesson6";
+import Lesson7 from "../screens/lessons/Lesson7/Lesson7";
 const defaultNavigationOptions = {
   headerStyle: {
     backgroundColor: Platform.OS === "android" ? Colors.buttonColor : "",
@@ -38,6 +39,7 @@ export const LessonsNavigator = () => {
       <LessonsStackNavigator.Screen name="lesson4" component={Lesson4} />
       <LessonsStackNavigator.Screen name="lesson5" component={Lesson5} />
       <LessonsStackNavigator.Screen name="lesson6" component={Lesson6} />
+      <LessonsStackNavigator.Screen name="lesson7" component={Lesson7} />
     </LessonsStackNavigator.Navigator>
   );
 };

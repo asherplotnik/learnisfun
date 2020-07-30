@@ -216,12 +216,6 @@ const Lesson3 = (props) => {
       onStartShouldSetPanResponder: () => true,
       onPanResponderGrant: (evt, gestureState) => {
         selected = checkSelectedLetter(gestureState);
-        if (selected >= 0 && selected <= 8) {
-          // pan[selected].setOffset({
-          //   x: pan[selected].x._value,
-          //   y: pan[selected].y._value,
-          // });
-        }
       },
       onPanResponderMove: (evt, gestureState) => {
         if (selected >= 0 && selected <= 8) {

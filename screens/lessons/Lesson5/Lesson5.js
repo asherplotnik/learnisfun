@@ -51,7 +51,7 @@ const Lesson5 = (props) => {
   let count = useRef(0);
   const [done, setDone] = useState(false);
   useEffect(() => {
-    dispatch(activeLessonActions.setActiveLesson(4, 100));
+    dispatch(activeLessonActions.setActiveLesson(5, 100));
     playAudio(audioMessages.openAudio);
   }, []);
   const width = Dimensions.get("window").width;

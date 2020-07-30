@@ -14,6 +14,7 @@ const lessons = [
   { id: 4, name: "lesson4", description: "Find the vegetables" },
   { id: 5, name: "lesson5", description: "Spot the differences" },
   { id: 6, name: "lesson6", description: "Color the clothes" },
+  { id: 7, name: "lesson7", description: "Draw a line" },
 ];
 const LessonsScreen = (props) => {
   return (
