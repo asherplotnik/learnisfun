@@ -8,6 +8,7 @@ import {
   Image,
   Dimensions,
   PanResponder,
+  Animated,
 } from "react-native";
 import FinishScreen from "../../../components/FinishScreen";
 import * as activeLessonActions from "../../../store/actions/activeLessonActions";
@@ -25,12 +26,13 @@ const Lesson7 = (props) => {
   let [done, setDone] = useState(false);
   let [refresh, setRefresh] = useState(0);
   const pan = useRef([
-    [10, 10],
-    [10, windowHeight / 6],
-    [10, windowHeight / 2.6],
-    [10, windowHeight / 1.83],
+    new Animated.ValueXY({ x: 10, y: 10 }),
+    new Animated.ValueXY({ x: 10, y: windowHeight / 6 }),
+    new Animated.ValueXY({ x: 10, y: windowHeight / 2.6 }),
+    new Animated.ValueXY({ x: 10, y: windowHeight / 1.83 }),
   ]);
-
+  const AnimatedSvg = Animated.createAnimatedComponent(Svg);
+  const AnimatedLine = Animated.createAnimatedComponent(Line);
   const svgViewBox = `0 0 ${windowWidth * 0.5}  ${windowHeight * 0.57}`;
   useEffect(() => {
     dispatch(activeLessonActions.setActiveLesson(7, 100));
@@ -58,31 +60,31 @@ const Lesson7 = (props) => {
 
   const checkSelected = (gestureState) => {
     if (
-      gestureState.x0 - Dimensions.get("window").width / 6 > 0 &&
-      gestureState.x0 - Dimensions.get("window").width / 6 < 20 &&
-      gestureState.y0 - windowHeight / 5.7 - 80 > 0 &&
-      gestureState.y0 - windowHeight / 5.7 - 80 < 20
+      gestureState.x0 - windowWidth / 6 > -10 &&
+      gestureState.x0 - windowWidth / 6 < 30 &&
+      gestureState.y0 - windowHeight / 5.7 - 80 > -10 &&
+      gestureState.y0 - windowHeight / 5.7 - 80 < 30
     ) {
       return 0;
     } else if (
-      gestureState.x0 - windowWidth / 6 > 0 &&
-      gestureState.x0 - windowWidth / 6 < 20 &&
-      gestureState.y0 - windowHeight / 5.7 - 80 > windowHeight / 7 &&
-      gestureState.y0 - windowHeight / 5.7 - 80 < windowHeight / 5
+      gestureState.x0 - windowWidth / 6 > -10 &&
+      gestureState.x0 - windowWidth / 6 < 30 &&
+      gestureState.y0 - windowHeight / 5.7 - 80 > windowHeight / 7.2 &&
+      gestureState.y0 - windowHeight / 5.7 - 80 < windowHeight / 4.8
     ) {
       return 1;
     } else if (
-      gestureState.x0 - windowWidth / 6 > 0 &&
-      gestureState.x0 - windowWidth / 6 < 20 &&
-      gestureState.y0 - windowHeight / 5.7 - 80 > windowHeight / 2.7 &&
-      gestureState.y0 - windowHeight / 5.7 - 80 < windowHeight / 2.5
+      gestureState.x0 - windowWidth / 6 > -10 &&
+      gestureState.x0 - windowWidth / 6 < 30 &&
+      gestureState.y0 - windowHeight / 5.7 - 80 > windowHeight / 2.8 &&
+      gestureState.y0 - windowHeight / 5.7 - 80 < windowHeight / 2.4
     ) {
       return 2;
     } else if (
-      gestureState.x0 - windowWidth / 6 > 0 &&
-      gestureState.x0 - windowWidth / 6 < 20 &&
-      gestureState.y0 - windowHeight / 5.7 - 80 > windowHeight / 1.9 &&
-      gestureState.y0 - windowHeight / 5.7 - 80 < windowHeight / 1.78
+      gestureState.x0 - windowWidth / 6 > -10 &&
+      gestureState.x0 - windowWidth / 6 < 30 &&
+      gestureState.y0 - windowHeight / 5.7 - 80 > windowHeight / 2 &&
+      gestureState.y0 - windowHeight / 5.7 - 80 < windowHeight / 1.65
     ) {
       return 3;
     }
@@ -93,18 +95,18 @@ const Lesson7 = (props) => {
     switch (item) {
       case 0:
         if (
-          (pan.current[selected.current][0] >= windowWidth / 2.35 &&
-            pan.current[selected.current][0] <= windowWidth / 1.9 &&
-            pan.current[selected.current][1] >= windowHeight / 1.907 &&
-            pan.current[selected.current][1] <= windowHeight / 1.737) ||
-          (pan.current[selected.current][0] >= windowWidth / 2.35 &&
-            pan.current[selected.current][0] <= windowWidth / 1.9 &&
-            pan.current[selected.current][1] >= -3 &&
-            pan.current[selected.current][1] <= windowHeight / 22.7) ||
-          (pan.current[selected.current][0] >= windowWidth / 2.35 &&
-            pan.current[selected.current][0] <= windowWidth / 1.9 &&
-            pan.current[selected.current][1] >= windowHeight / 6.96 &&
-            pan.current[selected.current][1] <= windowHeight / 4.84)
+          (pan.current[selected.current].x >= windowWidth / 2.35 &&
+            pan.current[selected.current].x <= windowWidth / 1.9 &&
+            pan.current[selected.current].y >= windowHeight / 1.907 &&
+            pan.current[selected.current].y <= windowHeight / 1.737) ||
+          (pan.current[selected.current].x >= windowWidth / 2.35 &&
+            pan.current[selected.current].x <= windowWidth / 1.9 &&
+            pan.current[selected.current].y >= -3 &&
+            pan.current[selected.current].y <= windowHeight / 22.7) ||
+          (pan.current[selected.current].x >= windowWidth / 2.35 &&
+            pan.current[selected.current].x <= windowWidth / 1.9 &&
+            pan.current[selected.current].y >= windowHeight / 6.96 &&
+            pan.current[selected.current].y <= windowHeight / 4.84)
         ) {
           return true;
         } else {
@@ -112,18 +114,18 @@ const Lesson7 = (props) => {
         }
       case 1:
         if (
-          (pan.current[selected.current][0] >= windowWidth / 2.35 &&
-            pan.current[selected.current][0] <= windowWidth / 1.9 &&
-            pan.current[selected.current][1] >= windowHeight / 2.81 &&
-            pan.current[selected.current][1] <= windowHeight / 2.47) ||
-          (pan.current[selected.current][0] >= windowWidth / 2.35 &&
-            pan.current[selected.current][0] <= windowWidth / 1.9 &&
-            pan.current[selected.current][1] >= -3 &&
-            pan.current[selected.current][1] <= windowHeight / 22.7) ||
-          (pan.current[selected.current][0] >= windowWidth / 2.35 &&
-            pan.current[selected.current][0] <= windowWidth / 1.9 &&
-            pan.current[selected.current][1] >= windowHeight / 6.96 &&
-            pan.current[selected.current][1] <= windowHeight / 4.84)
+          (pan.current[selected.current].x >= windowWidth / 2.35 &&
+            pan.current[selected.current].x <= windowWidth / 1.9 &&
+            pan.current[selected.current].y >= windowHeight / 2.81 &&
+            pan.current[selected.current].y <= windowHeight / 2.47) ||
+          (pan.current[selected.current].x >= windowWidth / 2.35 &&
+            pan.current[selected.current].x <= windowWidth / 1.9 &&
+            pan.current[selected.current].y >= -3 &&
+            pan.current[selected.current].y <= windowHeight / 22.7) ||
+          (pan.current[selected.current].x >= windowWidth / 2.35 &&
+            pan.current[selected.current].x <= windowWidth / 1.9 &&
+            pan.current[selected.current].y >= windowHeight / 6.96 &&
+            pan.current[selected.current].y <= windowHeight / 4.84)
         ) {
           return true;
         } else {
@@ -131,18 +133,18 @@ const Lesson7 = (props) => {
         }
       case 2:
         if (
-          (pan.current[selected.current][0] >= windowWidth / 2.35 &&
-            pan.current[selected.current][0] <= windowWidth / 1.9 &&
-            pan.current[selected.current][1] >= windowHeight / 2.81 &&
-            pan.current[selected.current][1] <= windowHeight / 2.47) ||
-          (pan.current[selected.current][0] >= windowWidth / 2.35 &&
-            pan.current[selected.current][0] <= windowWidth / 1.9 &&
-            pan.current[selected.current][1] >= windowHeight / 1.907 &&
-            pan.current[selected.current][1] <= windowHeight / 1.737) ||
-          (pan.current[selected.current][0] >= windowWidth / 2.35 &&
-            pan.current[selected.current][0] <= windowWidth / 1.9 &&
-            pan.current[selected.current][1] >= windowHeight / 6.96 &&
-            pan.current[selected.current][1] <= windowHeight / 4.84)
+          (pan.current[selected.current].x >= windowWidth / 2.35 &&
+            pan.current[selected.current].x <= windowWidth / 1.9 &&
+            pan.current[selected.current].y >= windowHeight / 2.81 &&
+            pan.current[selected.current].y <= windowHeight / 2.47) ||
+          (pan.current[selected.current].x >= windowWidth / 2.35 &&
+            pan.current[selected.current].x <= windowWidth / 1.9 &&
+            pan.current[selected.current].y >= windowHeight / 1.907 &&
+            pan.current[selected.current].y <= windowHeight / 1.737) ||
+          (pan.current[selected.current].x >= windowWidth / 2.35 &&
+            pan.current[selected.current].x <= windowWidth / 1.9 &&
+            pan.current[selected.current].y >= windowHeight / 6.96 &&
+            pan.current[selected.current].y <= windowHeight / 4.84)
         ) {
           return true;
         } else {
@@ -150,18 +152,18 @@ const Lesson7 = (props) => {
         }
       case 3:
         if (
-          (pan.current[selected.current][0] >= windowWidth / 2.35 &&
-            pan.current[selected.current][0] <= windowWidth / 1.9 &&
-            pan.current[selected.current][1] >= windowHeight / 2.81 &&
-            pan.current[selected.current][1] <= windowHeight / 2.47) ||
-          (pan.current[selected.current][0] >= windowWidth / 2.35 &&
-            pan.current[selected.current][0] <= windowWidth / 1.9 &&
-            pan.current[selected.current][1] >= windowHeight / 1.907 &&
-            pan.current[selected.current][1] <= windowHeight / 1.737) ||
-          (pan.current[selected.current][0] >= windowWidth / 2.35 &&
-            pan.current[selected.current][0] <= windowWidth / 1.9 &&
-            pan.current[selected.current][1] >= -3 &&
-            pan.current[selected.current][1] <= windowHeight / 22.7)
+          (pan.current[selected.current].x >= windowWidth / 2.35 &&
+            pan.current[selected.current].x <= windowWidth / 1.9 &&
+            pan.current[selected.current].y >= windowHeight / 2.81 &&
+            pan.current[selected.current].y <= windowHeight / 2.47) ||
+          (pan.current[selected.current].x >= windowWidth / 2.35 &&
+            pan.current[selected.current].x <= windowWidth / 1.9 &&
+            pan.current[selected.current].y >= windowHeight / 1.907 &&
+            pan.current[selected.current].y <= windowHeight / 1.737) ||
+          (pan.current[selected.current].x >= windowWidth / 2.35 &&
+            pan.current[selected.current].x <= windowWidth / 1.9 &&
+            pan.current[selected.current].y >= -3 &&
+            pan.current[selected.current].y <= windowHeight / 22.7)
         ) {
           return true;
         } else {
@@ -175,122 +177,176 @@ const Lesson7 = (props) => {
       onStartShouldSetPanResponder: () => true,
       onPanResponderGrant: (evt, gestureState) => {
         selected.current = checkSelected(gestureState);
+        if (selected.current >= 0) {
+          if (found[selected.current] === 0) {
+            switch (selected.current) {
+              case 0:
+                pan.current[0].setOffset({
+                  x: pan.current[0].x._value - windowWidth / 6,
+                  y: pan.current[0].y._value - windowHeight / 5.7 - 80,
+                });
+                break;
+              case 1:
+                pan.current[1].setOffset({
+                  x: pan.current[1].x._value - windowWidth / 6,
+                  y: pan.current[1].y._value - windowHeight / 3 - 80,
+                });
+                break;
+              case 2:
+                pan.current[2].setOffset({
+                  x: pan.current[2].x._value - windowWidth / 6,
+                  y: pan.current[2].y._value - windowHeight / 1.8 - 80,
+                });
+                break;
+              case 3:
+                pan.current[3].setOffset({
+                  x: pan.current[3].x._value - windowWidth / 6,
+                  y: pan.current[3].y._value - windowHeight / 1.4 - 80,
+                });
+                break;
+            }
+          }
+        }
       },
       onPanResponderMove: (evt, gestureState) => {
         if (selected.current >= 0) {
           if (found[selected.current] === 0) {
-            pan.current[selected.current][0] =
-              gestureState.moveX - windowWidth / 6;
-            pan.current[selected.current][1] =
-              gestureState.moveY - windowHeight / 5.7 - 80;
-            setRefresh((prevState) => prevState + 1);
+            // pan.current[selected.current].x =
+            //   gestureState.moveX - windowWidth / 6;
+            // pan.current[selected.current].y =
+            //   gestureState.moveY - windowHeight / 5.7 - 80;
+            //setRefresh((prevState) => prevState + 1);
+            return Animated.event(
+              [
+                null,
+                {
+                  moveX: pan.current[selected.current].x,
+                  moveY: pan.current[selected.current].y,
+                },
+              ],
+              {
+                useNativeDriver: false,
+              }
+            )(evt, gestureState);
           }
         }
       },
       onPanResponderRelease: (evt, gestureState) => {
         switch (selected.current) {
           case 0:
-            if (
-              pan.current[0][0] >= windowWidth / 2.35 &&
-              pan.current[0][0] <= windowWidth / 1.9 &&
-              pan.current[0][1] >= windowHeight / 2.9 &&
-              pan.current[0][1] <= windowHeight / 2.35
-            ) {
-              found[0] = 1;
-              updateShowV();
-              isWrong = false;
-            } else {
-              if (checkMistake(0)) {
-                if (isWrong === false) {
-                  dispatch(activeLessonActions.updateScore(-20));
-                  updateShowX();
-                  isWrong = true;
+            if (found[0] === 0) {
+              if (
+                pan.current[0].x._value >= windowWidth / 1.72 &&
+                pan.current[0].x._value <= windowWidth / 1.48 &&
+                pan.current[0].y._value >= windowHeight / 1.59 &&
+                pan.current[0].y._value <= windowHeight / 1.4
+              ) {
+                found[0] = 1;
+                updateShowV();
+                isWrong = false;
+              } else {
+                if (checkMistake(0)) {
+                  if (isWrong === false) {
+                    dispatch(activeLessonActions.updateScore(-20));
+                    updateShowX();
+                    isWrong = true;
+                  } else {
+                    setRefresh((prevState) => prevState + 1);
+                  }
                 } else {
                   setRefresh((prevState) => prevState + 1);
                 }
-              } else {
-                setRefresh((prevState) => prevState + 1);
+                pan.current[0].flattenOffset();
+                pan.current[0].x._value = 10;
+                pan.current[0].y._value = 10;
               }
-              pan.current[0][0] = 10;
-              pan.current[0][1] = 10;
             }
             break;
           case 1:
-            if (
-              pan.current[1][0] >= windowWidth / 2.35 &&
-              pan.current[1][0] <= windowWidth / 1.9 &&
-              pan.current[1][1] >= windowHeight / 2 &&
-              pan.current[1][1] <= windowHeight / 1.6
-            ) {
-              found[1] = 1;
-              updateShowV();
-              isWrong = false;
-            } else {
-              if (checkMistake(1)) {
-                if (isWrong === false) {
-                  dispatch(activeLessonActions.updateScore(-20));
-                  updateShowX();
-                  isWrong = true;
+            if (found[1] === 0) {
+              if (
+                pan.current[1].x._value >= windowWidth / 1.72 &&
+                pan.current[1].x._value <= windowWidth / 1.48 &&
+                pan.current[1].y._value >= windowHeight / 1.25 &&
+                pan.current[1].y._value <= windowHeight / 1.12
+              ) {
+                found[1] = 1;
+                updateShowV();
+                isWrong = false;
+              } else {
+                if (checkMistake(1)) {
+                  if (isWrong === false) {
+                    dispatch(activeLessonActions.updateScore(-20));
+                    updateShowX();
+                    isWrong = true;
+                  } else {
+                    setRefresh((prevState) => prevState + 1);
+                  }
                 } else {
                   setRefresh((prevState) => prevState + 1);
                 }
-              } else {
-                setRefresh((prevState) => prevState + 1);
+                pan.current[1].flattenOffset();
+                pan.current[1].x._value = 10;
+                pan.current[1].y._value = windowHeight / 5.9;
               }
-              pan.current[1][0] = 10;
-              pan.current[1][1] = windowHeight / 5.9;
             }
             break;
           case 2:
-            if (
-              pan.current[2][0] >= windowWidth / 2.35 &&
-              pan.current[2][0] <= windowWidth / 1.9 &&
-              pan.current[2][1] >= -3 &&
-              pan.current[2][1] <= windowHeight / 20
-            ) {
-              found[2] = 1;
-              updateShowV();
-              isWrong = false;
-            } else {
-              if (checkMistake(2)) {
-                if (isWrong === false) {
-                  dispatch(activeLessonActions.updateScore(-20));
-                  updateShowX();
-                  isWrong = true;
+            if (found[2] === 0) {
+              if (
+                pan.current[2].x._value >= windowWidth / 1.72 &&
+                pan.current[2].x._value <= windowWidth / 1.48 &&
+                pan.current[2].y._value >= windowHeight / 3.69 &&
+                pan.current[2].y._value <= windowHeight / 3
+              ) {
+                found[2] = 1;
+                updateShowV();
+                isWrong = false;
+              } else {
+                if (checkMistake(2)) {
+                  if (isWrong === false) {
+                    dispatch(activeLessonActions.updateScore(-20));
+                    updateShowX();
+                    isWrong = true;
+                  } else {
+                    setRefresh((prevState) => prevState + 1);
+                  }
                 } else {
                   setRefresh((prevState) => prevState + 1);
                 }
-              } else {
-                setRefresh((prevState) => prevState + 1);
+                pan.current[2].flattenOffset();
+                pan.current[2].x._value = 10;
+                pan.current[2].y._value = windowHeight / 2.6;
               }
-              pan.current[2][0] = 10;
-              pan.current[2][1] = windowHeight / 2.6;
             }
             break;
           case 3:
-            if (
-              pan.current[3][0] >= windowWidth / 2.35 &&
-              pan.current[3][0] <= windowWidth / 1.9 &&
-              pan.current[3][1] >= windowHeight / 7.06 &&
-              pan.current[3][1] <= windowHeight / 4.7
-            ) {
-              found[3] = 1;
-              updateShowV();
-              isWrong = false;
-            } else {
-              if (checkMistake(3)) {
-                if (isWrong === false) {
-                  dispatch(activeLessonActions.updateScore(-20));
-                  updateShowX();
-                  isWrong = true;
+            if (found[3] === 0) {
+              if (
+                pan.current[3].x._value >= windowWidth / 1.72 &&
+                pan.current[3].x._value <= windowWidth / 1.48 &&
+                pan.current[3].y._value >= windowHeight / 2.33 &&
+                pan.current[3].y._value <= windowHeight / 2.03
+              ) {
+                found[3] = 1;
+                updateShowV();
+                isWrong = false;
+              } else {
+                if (checkMistake(3)) {
+                  if (isWrong === false) {
+                    dispatch(activeLessonActions.updateScore(-20));
+                    updateShowX();
+                    isWrong = true;
+                  } else {
+                    setRefresh((prevState) => prevState + 1);
+                  }
                 } else {
                   setRefresh((prevState) => prevState + 1);
                 }
-              } else {
-                setRefresh((prevState) => prevState + 1);
+                pan.current[3].flattenOffset();
+                pan.current[3].x._value = 10;
+                pan.current[3].y._value = windowHeight / 1.83;
               }
-              pan.current[3][0] = 10;
-              pan.current[3][1] = windowHeight / 1.83;
             }
             break;
         }
@@ -306,40 +362,40 @@ const Lesson7 = (props) => {
       <X show={showX} setShow={updateShowX} />
       <Image style={styles.image} source={require("./image.png")} />
       <View style={styles.svgView}>
-        <Svg height="100%" width="100%" viewBox={svgViewBox}>
-          <Line
+        <AnimatedSvg height="100%" width="100%" viewBox={svgViewBox}>
+          <AnimatedLine
             x1="10"
             y1="10"
-            x2={pan.current[0][0]}
-            y2={pan.current[0][1]}
+            x2={pan.current[0].x}
+            y2={pan.current[0].y}
             stroke="black"
             strokeWidth="4"
           />
-          <Line
+          <AnimatedLine
             x1="10"
             y1={windowHeight / 5.9}
-            x2={pan.current[1][0]}
-            y2={pan.current[1][1]}
+            x2={pan.current[1].x}
+            y2={pan.current[1].y}
             stroke="black"
             strokeWidth="4"
           />
-          <Line
+          <AnimatedLine
             x1="10"
             y1={windowHeight / 2.6}
-            x2={pan.current[2][0]}
-            y2={pan.current[2][1]}
+            x2={pan.current[2].x}
+            y2={pan.current[2].y}
             stroke="black"
             strokeWidth="4"
           />
-          <Line
+          <AnimatedLine
             x1="10"
             y1={windowHeight / 1.83}
-            x2={pan.current[3][0]}
-            y2={pan.current[3][1]}
+            x2={pan.current[3].x}
+            y2={pan.current[3].y}
             stroke="black"
             strokeWidth="4"
           />
-        </Svg>
+        </AnimatedSvg>
       </View>
     </View>
   );
